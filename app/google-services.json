@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1075390402630",
+    "project_id": "loginsturine",
+    "storage_bucket": "loginsturine.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1075390402630:android:74e7633c18b3fbdb427a47",
+        "android_client_info": {
+          "package_name": "com.example.icnew"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5FungWLDBiLu-xr1m1JiH-pVMKorXzaA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

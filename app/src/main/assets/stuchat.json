@@ -1,0 +1,69 @@
+{
+    "name": null,
+    "memory": null,
+    "verbose": false,
+    "tags": null,
+    "metadata": null,
+    "input_key": "input_documents",
+    "output_key": "output_text",
+    "llm_chain": {
+        "name": null,
+        "memory": null,
+        "verbose": false,
+        "tags": null,
+        "metadata": null,
+        "prompt": {
+            "name": null,
+            "input_variables": [
+                "context",
+                "question"
+            ],
+            "input_types": {},
+            "output_parser": null,
+            "partial_variables": {},
+            "metadata": null,
+            "tags": null,
+            "template": "Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.\n\n{context}\n\nQuestion: {question}\nHelpful Answer:",
+            "template_format": "f-string",
+            "validate_template": false,
+            "_type": "prompt"
+        },
+        "llm": {
+            "model_name": "gpt-3.5-turbo-instruct",
+            "temperature": 0.7,
+            "top_p": 1,
+            "frequency_penalty": 0,
+            "presence_penalty": 0,
+            "n": 1,
+            "logit_bias": {},
+            "max_tokens": 256,
+            "_type": "openai"
+        },
+        "output_key": "text",
+        "output_parser": {
+            "name": null,
+            "_type": "default"
+        },
+        "return_final_only": true,
+        "llm_kwargs": {},
+        "_type": "llm_chain"
+    },
+    "document_prompt": {
+        "name": null,
+        "input_variables": [
+            "page_content"
+        ],
+        "input_types": {},
+        "output_parser": null,
+        "partial_variables": {},
+        "metadata": null,
+        "tags": null,
+        "template": "{page_content}",
+        "template_format": "f-string",
+        "validate_template": false,
+        "_type": "prompt"
+    },
+    "document_variable_name": "context",
+    "document_separator": "\n\n",
+    "_type": "stuff_documents_chain"
+}

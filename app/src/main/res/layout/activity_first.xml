@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/sel2"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/nextP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Diagnosis"
+        android:layout_marginTop="16dp"
+        android:onClick="goToSecondActivity" />
+
+    <EditText
+        android:id="@+id/doctor_phone_number_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Doctor's Phone Number"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/nextP"
+        android:layout_marginTop="16dp"
+        android:inputType="phone" />
+
+    <Button
+        android:layout_width="219dp"
+        android:layout_height="61dp"
+        android:layout_below="@id/doctor_phone_number_edit_text"
+        android:layout_marginTop="16dp"
+        android:onClick="saveDoctorPhoneNumber"
+        android:text="Save Doctor's Phone Number" />
+
+    <Button
+        android:id="@+id/selectContactButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/doctor_phone_number_edit_text"
+        android:layout_marginStart="-152dp"
+        android:layout_marginTop="16dp"
+        android:layout_toEndOf="@id/doctor_phone_number_edit_text"
+        android:onClick="selectContact"
+        android:text="Select Contact" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp" />
+
+    <TextView
+        android:id="@+id/user_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User Details"
+        android:textColor="@color/white"
+        android:layout_above="@id/logout"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp" />
+
+</RelativeLayout>
+
