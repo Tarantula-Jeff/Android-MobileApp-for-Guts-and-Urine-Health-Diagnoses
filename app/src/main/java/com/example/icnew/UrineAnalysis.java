@@ -38,7 +38,9 @@ public class UrineAnalysis extends AppCompatActivity {
 
     Button camera, gallery;
     ImageView imageView;
-    TextView result;
+    TextView result, sendAlertText;
+    View sendAlertCard;
+    String pendingAlertMessage;
     int imageSize = 32;
 
     @Override
@@ -51,6 +53,13 @@ public class UrineAnalysis extends AppCompatActivity {
 
         result = findViewById(R.id.result);
         imageView = findViewById(R.id.imageView);
+        sendAlertCard = findViewById(R.id.send_alert_card);
+        sendAlertText = findViewById(R.id.send_alert_text);
+        findViewById(R.id.do_not_send_alert).setOnClickListener(view -> {
+            pendingAlertMessage = null;
+            sendAlertCard.setVisibility(View.GONE);
+        });
+        findViewById(R.id.send_alert_now).setOnClickListener(view -> sendPendingAlert());
 
         // Retrieve the doctor's phone number from SharedPreferences
 
@@ -126,7 +135,7 @@ public class UrineAnalysis extends AppCompatActivity {
             if(classes[maxPos].equals("Red")){
                 String mess1 ="URGENT: Patient's urine analysis detected pink-to-reddish color.Could be from beets or exercise, but no recent causes.Possible concerns: blood in Urine ";
                 result.setText("Likely "+classes[maxPos]+ rdiagnoses());
-                showConfirmationDialog(mess1);
+                showSendPrompt(mess1);
 
                // result.setText("likely" + classes[maxPos]);
 
@@ -140,7 +149,7 @@ public class UrineAnalysis extends AppCompatActivity {
                 String mess2 ="Urgent:Dark-colored urine, possibly indicating dehydration,medication side effects or"
                         +" liver disease." +
                         " Please advise on next steps.";
-                showConfirmationDialog(mess2);
+                showSendPrompt(mess2);
 
             } else if (classes[maxPos].equals("Clear")){
                 result.setText("Likely "+classes[maxPos]+cdiagnoses());
@@ -149,7 +158,7 @@ public class UrineAnalysis extends AppCompatActivity {
                         " Possible causes:food dyes, medications,"+
                         "Genetic condition like familial benign hypercalcemia " +
                         " Please advise on necessary action.";
-                showConfirmationDialog(mess3);
+                showSendPrompt(mess3);
                 result.setText("Likely "+classes[maxPos]+gdiagnoses());
             } else if (classes[maxPos].equals("Orange")){
                 result.setText("Likely "+classes[maxPos]+odiagnoses());
@@ -161,7 +170,7 @@ public class UrineAnalysis extends AppCompatActivity {
                         "Possible causes:bacterial infection ,familial benign hypercalcemia " +
                         ",dyes from food, medications," +
                         "Please advise on necessary action.\n";
-                showConfirmationDialog(mess4);
+                showSendPrompt(mess4);
 
             } else if (classes[maxPos].equals("Brown")){
                 result.setText("Likely "+classes[maxPos]+brdiagnoses());
@@ -173,8 +182,19 @@ public class UrineAnalysis extends AppCompatActivity {
             //result.setText("likely"+classes[maxPos]);
             //  String home =result.setText(classes[maxPos]);
 
+            Bitmap historyImage = imageView.getDrawable() instanceof android.graphics.drawable.BitmapDrawable
+                    ? ((android.graphics.drawable.BitmapDrawable) imageView.getDrawable()).getBitmap() : null;
+            SampleHistoryRepository.save(this, "Urine", classes[maxPos], historyImage);
+            ResultHistoryRepository.save(this, "Urine", classes[maxPos]);
 
             // Releases model resources if no longer used.
+String resultClass = classes[maxPos];
+            boolean urgentResult = resultClass.equals("Red") || resultClass.equals("Black") || resultClass.equals("Green") || resultClass.equals("Blue");
+            TextView badge = findViewById(R.id.result_badge);
+            badge.setText(urgentResult ? "HIGH RISK" : "PRELIMINARY RESULT");
+            badge.setBackgroundColor(getColor(urgentResult ? R.color.health_urgent : R.color.health_success));
+            badge.setTextColor(getColor(R.color.white));
+            ((TextView) findViewById(R.id.result_date)).setText("Analyzed " + new java.text.SimpleDateFormat("dd MMM yyyy, HH:mm", java.util.Locale.getDefault()).format(new java.util.Date()));
             model.close();
         } catch (IOException e) {
             // TODO Handle the exception
@@ -182,38 +202,21 @@ public class UrineAnalysis extends AppCompatActivity {
     }
 
 
-    public void showConfirmationDialog(String docMess) {
-        SharedPreferences preferences = getSharedPreferences("DoctorPrefs", MODE_PRIVATE);
-        String doctorPhoneNumber = preferences.getString("doctorPhoneNumber", "");
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialogue, null);
-        builder.setView(dialogView);
-
-        final AlertDialog dialog = builder.create();
-        dialog.show();
-
-        Button btnCancel = dialog.findViewById(R.id.btn_cancel);
-        Button btnSend = dialog.findViewById(R.id.btn_send);
-
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // Call the method to send the message to the doctor
-                sendSMS(doctorPhoneNumber, docMess);
-                dialog.dismiss();
-            }
-        });
+    public void showSendPrompt(String message) {
+        pendingAlertMessage = message;
+        sendAlertText.setText("Read your result below before deciding. If you choose Send to doctor, this urgent alert will be shared with your selected doctor.\n\n" + message);
+        sendAlertCard.setVisibility(View.VISIBLE);
     }
+
+    private void sendPendingAlert() {
+        if (pendingAlertMessage == null) return;
+        Bitmap imageForDoctor = imageView.getDrawable() instanceof android.graphics.drawable.BitmapDrawable
+                ? ((android.graphics.drawable.BitmapDrawable) imageView.getDrawable()).getBitmap() : null;
+        AlertDispatcher.dispatch(this, pendingAlertMessage, imageForDoctor);
+        pendingAlertMessage = null;
+        sendAlertCard.setVisibility(View.GONE);
+    }
+
     public String cdiagnoses(){
         String clear ="                                                         "+
                 "Clear urine:   You are good. " +
@@ -223,10 +226,10 @@ public class UrineAnalysis extends AppCompatActivity {
                 "the daily recommended amount of water can lower your " +
                 "salt rob you of your body of electrolytes, bringing it " +
                 "below the level of what your body needs.\n" +
-                "However if your urine is clear and  If you’re not consuming large amounts " +
+                "However if your urine is clear and  If youÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢re not consuming large amounts " +
                 "of water and have ongoing clear urine, that may signal an underlying kidney problem , " +
                 "diabetes, liver problems like cirrhosis and viral hepatitis. In this situation, " +
-                "it’s best to see a doctor to get answers.\n";
+                "itÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢s best to see a doctor to get answers.\n";
         return clear;
     }
     public String bdiagnoses(){
@@ -241,15 +244,15 @@ public class UrineAnalysis extends AppCompatActivity {
                 " A condition called porphyria can cause a buildup of the natural chemicals in your bloodstream and cause rusty or brown urine.\n" +
                 " Dark brown urine can also indicate liver disease, as it can be caused by bile getting into your urine.\n" +
                 " Intense physical activity, especially running, can cause dark brown urine, known as exertional hematuria.\n" +
-                "This isn’t considered unusual. When your urine is dark because of exercise, it’ll typically resolve with some rest within a few hours.\n" +
-                "However  If you frequently see dark brown urine after exercise, or if your urine doesn’t return to normal after 48 hours, I highly recommend you should speak with a doctor about possible underlying causes\n";
+                "This isnÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢t considered unusual. When your urine is dark because of exercise, itÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ll typically resolve with some rest within a few hours.\n" +
+                "However  If you frequently see dark brown urine after exercise, or if your urine doesnÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢t return to normal after 48 hours, I highly recommend you should speak with a doctor about possible underlying causes\n";
                 return black;
     }
     public String rdiagnoses(){
         String red="                                                         "+
                 "Pink- to reddish-color:   This could be caused by eating certain kinds of edibles such as beets, blueberries or within the last day or so. " +
                 "Hard exercise, such as long-distance running and A tuberculosis medicine such as rifampin (Rifadin, Rimactane) also can cause this bleeding. " +
-                "However, if you do not fall under any of the above, then you should be concerned. This could be a sign of: Blood in your urine. Kidney disease. Cancers of the kidney or bladder. Kidney stones. A urinary tract infection. Prostate problems. Lead or mercury poisoning. Contact your doctor as soon as possible if the color doesn’t return to yellow.\n" +
+                "However, if you do not fall under any of the above, then you should be concerned. This could be a sign of: Blood in your urine. Kidney disease. Cancers of the kidney or bladder. Kidney stones. A urinary tract infection. Prostate problems. Lead or mercury poisoning. Contact your doctor as soon as possible if the color doesnÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢t return to yellow.\n" +
                 "Possible Remedy:\n" +
                 "See your doctor as soon as possible if persists. You can just allow this app to send the message to your doctor too.\n";
         return red;
@@ -257,29 +260,29 @@ public class UrineAnalysis extends AppCompatActivity {
         String green="                                                         "+
                 "Green urine:   can be caused by dyes. Some brightly colored food dyes(think heavily something you ate) can cause this. Dyes used for some kidney and bladder tests can turn urine blue.  A medicine for depression called amitriptyline can make urine look greenish-blue. So can a treatment for ulcers and acid reflux called cimetidine (Tagamet HB). A water pill called triamterene (Dyrenium) also can turn urine greenish-blue\n" +
                 "Health problems\n" +
-                "Pseudomonas aeruginosa bacterial infection can also cause your urine to turn blue, green, or indigo purple. A condition called familial benign hypercalcemia can also cause blue or green urine. Low to moderate calcium levels may appear in your urine and change color when you have this condition. Many people with this genetic condition don’t have symptoms that they notice.\n" +
+                "Pseudomonas aeruginosa bacterial infection can also cause your urine to turn blue, green, or indigo purple. A condition called familial benign hypercalcemia can also cause blue or green urine. Low to moderate calcium levels may appear in your urine and change color when you have this condition. Many people with this genetic condition donÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢t have symptoms that they notice.\n" +
                 "If you do not fall under any of the above, quickly see you doctor.\n";
         return green;
     } public String odiagnoses(){
         String orange="                                                         "+
-                "Don’t freak out. " +
+                "DonÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢t freak out. " +
                 "This could happen if you have taken medicines like Phenazopyridine and some constipation medicines can turn urine orange. So can sulfasalazine (Azulfidine), a medicine that lessens swelling and irritation. Some chemotherapy medicines for cancer also can make urine look orange. Vitamins, such as A and B-12, can turn urine orange or yellow-orange. So no need to worry.\n" +
                 "You only need to worry or have to take measures is when none of the above are met and this keeps on. As this could be a sign of a problem with the liver or bile duct, mainly if you also have light-colored stools.\n" +
                 " Dehydration also can make your urine look orange\n" +
                 "Possible Remedy:\n" +
                 "Drink enough water.\n" +
-                "If drinking enough water doesn’t change it nor even after you are done taking the medicine, see you doctor.\n";
+                "If drinking enough water doesnÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢t change it nor even after you are done taking the medicine, see you doctor.\n";
         return orange;
     } public String ydiagnoses(){
         String yellow="                                                         "+
-                "Good news! You’re in the preferred section of the urine color chart. " +
+                "Good news! YouÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢re in the preferred section of the urine color chart. " +
                 "The urochrome pigment naturally in your urine becomes more diluted as you drink water. " +
                 " In most situations, the color of your urine will depend on how diluted this pigment is." +
                 " Having a lot of B vitamins in your bloodstream can also cause urine to appear neon yellow";
         return yellow;
     } public String brdiagnoses(){
         String brown="                                                         "+
-                "Your dehydration level just crossed a line into a more worrisome status. Get Liquid as soon as possible . Urine that is dark brown also could be caused by bile getting into your urine, a sign of liver disease. Rusty or brown-colored pee also is a symptom of porphyria, a rare disorder affecting the skin and nervous system. If rehydrating doesn’t lighten up your urine, see your doctor\n" +
+                "Your dehydration level just crossed a line into a more worrisome status. Get Liquid as soon as possible . Urine that is dark brown also could be caused by bile getting into your urine, a sign of liver disease. Rusty or brown-colored pee also is a symptom of porphyria, a rare disorder affecting the skin and nervous system. If rehydrating doesnÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢t lighten up your urine, see your doctor\n" +
                 "Possible Remedy\n" +
                 "Drink enough water.\n" +
                 "If the color does not lighten up, You need to see your doctor\n";
@@ -288,7 +291,7 @@ public class UrineAnalysis extends AppCompatActivity {
         String blue="                                                         "+
                 "Blue urine:   Can be caused by dyes. Some brightly colored food dyes(think heavily something you ate) can cause this. Dyes used for some kidney and bladder tests can turn urine blue.  A medicine for depression called amitriptyline can make urine look greenish-blue. So can a treatment for ulcers and acid reflux called cimetidine (Tagamet HB). A water pill called triamterene (Dyrenium) also can turn urine greenish-blue\n" +
                 "Health problems\n" +
-                "Pseudomonas aeruginosa bacterial infection can also cause your urine to turn blue, green, or indigo purple. A condition called familial benign hypercalcemia can also cause blue or green urine. Low to moderate calcium levels may appear in your urine and change color when you have this condition. Many people with this genetic condition don’t have symptoms that they notice.\n" +
+                "Pseudomonas aeruginosa bacterial infection can also cause your urine to turn blue, green, or indigo purple. A condition called familial benign hypercalcemia can also cause blue or green urine. Low to moderate calcium levels may appear in your urine and change color when you have this condition. Many people with this genetic condition donÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢t have symptoms that they notice.\n" +
                 "If you do not fall under any of the above, quickly see you doctor.\n";
         return blue;
     }
@@ -304,6 +307,9 @@ public class UrineAnalysis extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    public void openAssistant(View view) { startActivity(new Intent(this, SUChatbot.class)); }
+    public void contactDoctor(View view) { startActivity(new Intent(this, DeliverySettingsActivity.class)); }
 
     public void goBack(View view){
         finish();

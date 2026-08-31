@@ -18,6 +18,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Login extends AppCompatActivity {
     TextInputEditText editTextEmail, editTextPassword;
@@ -32,9 +33,7 @@ public class Login extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            Intent intent = new Intent(getApplicationContext(), FirstActivity.class);
-            startActivity(intent);
-            finish();
+            openCorrectDashboard();
 
         }
     }
@@ -81,9 +80,7 @@ public class Login extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(Login.this, "Login Successful.",
                                             Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), FirstActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                                    openCorrectDashboard();
 
                                 } else {
 
@@ -98,5 +95,20 @@ public class Login extends AppCompatActivity {
           });
 
 
+    }
+
+    private void openCorrectDashboard() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        FirebaseFirestore.getInstance().collection("users").document(user.getUid()).get()
+                .addOnSuccessListener(document -> {
+                    Class<?> destination = "doctor".equals(document.getString("role"))
+                            ? DoctorDashboardActivity.class : FirstActivity.class;
+                    startActivity(new Intent(getApplicationContext(), destination));
+                    finish();
+                })
+                .addOnFailureListener(error -> {
+                    startActivity(new Intent(getApplicationContext(), FirstActivity.class));
+                    finish();
+                });
     }
 }

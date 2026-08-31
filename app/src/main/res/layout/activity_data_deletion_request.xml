@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/health_page_background">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Request account deletion" android:textColor="@color/app_on_surface" android:textSize="30sp" android:textStyle="bold" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Submitting this request asks the app administrator to delete your account and associated online records. Your account stays active until the request is processed." android:textColor="@color/app_on_surface_variant" android:textSize="16sp" />
+        <com.google.android.material.card.MaterialCardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:backgroundTint="@color/app_surface">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="18dp">
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Local sample photos and symptom records are kept on your phone. You can choose to clear them now; this cannot be undone." android:textColor="@color/app_on_surface" android:textSize="14sp" />
+                <CheckBox android:id="@+id/clear_local_data" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Also clear local data from this phone now" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="22dp" android:hint="Type DELETE to confirm">
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/deletion_confirmation" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="textCapCharacters" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.button.MaterialButton android:id="@+id/submit_deletion_request" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="18dp" android:text="Submit deletion request" android:textAllCaps="false" />
+    </LinearLayout>
+</ScrollView>

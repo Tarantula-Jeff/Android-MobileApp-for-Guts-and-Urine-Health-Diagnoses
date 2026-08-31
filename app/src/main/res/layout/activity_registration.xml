@@ -1,96 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:background="@drawable/analyze"
-    android:padding="15dp"
-    tools:context=".Registration">
+    android:background="@drawable/health_page_background"
+    android:paddingHorizontal="24dp">
 
-
-    <TextView
-        android:id="@+id/registerTextView"
-        android:text="@string/register"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginBottom="20dp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/emailTextInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/registerTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email"
-            android:hint="@string/email"
-            android:background="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passwordTextInputLayout"
-        android:layout_width="0dp"
-        android:background="@color/white"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/emailTextInputLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password"
-            android:hint="Password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/passwordTextInputLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp" />
-
-    <Button
-        android:id="@+id/Register_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/register"
-        app:layout_constraintTop_toBottomOf="@id/progressBar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp" />
-
-    <TextView
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:gravity="center"
-        android:id="@+id/loginNow"
-        android:text="@string/click_to_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
+    <ScrollView android:layout_width="0dp" android:layout_height="0dp" android:fillViewport="true" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/auth_card_background" android:gravity="center_vertical" android:orientation="vertical" android:paddingVertical="32dp">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="GutGuardian" android:textColor="@color/brand_primary" android:textSize="16sp" android:textStyle="bold" />
+            <TextView android:id="@+id/registerTextView" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Create your account" android:textColor="@color/app_on_surface" android:textSize="32sp" android:textStyle="bold" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Choose how you will use GutGuardian." android:textColor="@color/app_on_surface_variant" android:textSize="16sp" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="28dp" android:text="I am registering as" android:textColor="@color/app_on_surface" android:textSize="16sp" android:textStyle="bold" />
+            <RadioGroup android:id="@+id/role_group" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="vertical">
+                <RadioButton android:id="@+id/role_patient" android:layout_width="match_parent" android:layout_height="wrap_content" android:checked="true" android:text="Patient - analyse samples and share results with my doctor" />
+                <RadioButton android:id="@+id/role_doctor" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Doctor - monitor linked patients and their results" />
+            </RadioGroup>
+            <com.google.android.material.textfield.TextInputLayout app:boxBackgroundMode="outline" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:hint="Full name">
+                <com.google.android.material.textfield.TextInputEditText android:id="@+id/full_name" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout android:id="@+id/emailTextInputLayout" app:boxBackgroundMode="outline" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:hint="@string/email">
+                <com.google.android.material.textfield.TextInputEditText android:id="@+id/email" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout android:id="@+id/passwordTextInputLayout" app:boxBackgroundMode="outline" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:hint="@string/password" app:endIconMode="password_toggle">
+                <com.google.android.material.textfield.TextInputEditText android:id="@+id/password" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <ProgressBar android:id="@+id/progressBar" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:visibility="gone" />
+            <com.google.android.material.button.MaterialButton android:id="@+id/Register_button" android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="24dp" android:text="Create account" android:textAllCaps="false" />
+            <TextView android:id="@+id/loginNow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:padding="8dp" android:text="Already have an account? Sign in" android:textColor="@color/brand_primary" android:textSize="15sp" android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

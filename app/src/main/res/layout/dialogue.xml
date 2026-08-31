@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="8dp">
 
     <TextView
         android:layout_width="match_parent"
@@ -10,7 +11,8 @@
         android:text="Want to go ahead and send the message to your doctor?"
         android:textSize="18sp"
         android:padding="16dp"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@color/app_on_surface" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +20,7 @@
         android:orientation="horizontal"
         android:padding="8dp">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_cancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -26,7 +28,7 @@
             android:text="Cancel"
             android:onClick="cancelSend" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_send"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

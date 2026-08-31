@@ -1,70 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/sel2"
-    tools:context=".MainActivity">
-
-    <Button
-        android:id="@+id/nextP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Diagnosis"
-        android:layout_marginTop="16dp"
-        android:onClick="goToSecondActivity" />
-
-    <EditText
-        android:id="@+id/doctor_phone_number_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Doctor's Phone Number"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/nextP"
-        android:layout_marginTop="16dp"
-        android:inputType="phone" />
-
-    <Button
-        android:layout_width="219dp"
-        android:layout_height="61dp"
-        android:layout_below="@id/doctor_phone_number_edit_text"
-        android:layout_marginTop="16dp"
-        android:onClick="saveDoctorPhoneNumber"
-        android:text="Save Doctor's Phone Number" />
-
-    <Button
-        android:id="@+id/selectContactButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/doctor_phone_number_edit_text"
-        android:layout_marginStart="-152dp"
-        android:layout_marginTop="16dp"
-        android:layout_toEndOf="@id/doctor_phone_number_edit_text"
-        android:onClick="selectContact"
-        android:text="Select Contact" />
-
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logout"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="16dp" />
-
-    <TextView
-        android:id="@+id/user_details"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="User Details"
-        android:textColor="@color/white"
-        android:layout_above="@id/logout"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="16dp" />
-
-</RelativeLayout>
-
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/health_page_background" android:fillViewport="true">
+ <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp">
+  <TextView android:id="@+id/home_brand" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="GUTGUARDIAN" android:textColor="@color/brand_primary" android:textSize="13sp" android:textStyle="bold" />
+  <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="Good morning" android:textColor="@color/app_on_surface" android:textSize="31sp" android:textStyle="bold" />
+  <TextView android:id="@+id/user_details" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:textColor="@color/app_on_surface_variant" android:textSize="15sp" />
+  <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:text="How are you feeling today?" android:textColor="@color/app_on_surface_variant" android:textSize="17sp" />
+  <com.google.android.material.card.MaterialCardView android:id="@+id/analysis_card" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp" app:cardBackgroundColor="@color/brand_primary" app:cardCornerRadius="24dp">
+   <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp">
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Check your health" android:textColor="@color/brand_on_primary" android:textSize="23sp" android:textStyle="bold" />
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Use AI-assisted analysis to examine your urine or stool sample." android:textColor="@color/brand_on_primary" android:textSize="15sp" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/nextP" style="@style/Widget.Material3.Button.TonalButton" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="20dp" android:onClick="goToSecondActivity" android:text="Start analysis" android:textAllCaps="false" />
+   </LinearLayout>
+  </com.google.android.material.card.MaterialCardView>
+  <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="28dp" android:text="Health tools" android:textColor="@color/app_on_surface" android:textSize="21sp" android:textStyle="bold" />
+  <com.google.android.material.button.MaterialButton android:id="@+id/sample_history" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="12dp" android:onClick="openSampleHistory" android:text="Analysis history" android:textAllCaps="false" />
+  <com.google.android.material.button.MaterialButton android:id="@+id/emergency_guidance" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="10dp" android:onClick="openEmergencyGuidance" android:text="Emergency guidance" android:textAllCaps="false" />
+  <com.google.android.material.button.MaterialButton android:id="@+id/reminders" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="10dp" android:onClick="openReminders" android:text="Wellness reminders" android:textAllCaps="false" />
+  <com.google.android.material.button.MaterialButton android:id="@+id/health_summary" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="10dp" android:onClick="openHealthSummary" android:text="Export health summary" android:textAllCaps="false" />
+  <com.google.android.material.button.MaterialButton android:id="@+id/symptom_tracker" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="10dp" android:onClick="openSymptomTracker" android:text="Symptom tracker" android:textAllCaps="false" />
+  <com.google.android.material.button.MaterialButton android:id="@+id/alert_history" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="10dp" android:onClick="openAlertHistory" android:text="Doctor alert history" android:textAllCaps="false" />
+  <com.google.android.material.button.MaterialButton android:id="@+id/alert_settings" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="10dp" android:onClick="openDeliverySettings" android:text="My doctor and settings" android:textAllCaps="false" />
+  <com.google.android.material.button.MaterialButton android:id="@+id/logout" style="@style/Widget.Material3.Button.TextButton" android:layout_width="wrap_content" android:layout_height="52dp" android:layout_gravity="center_horizontal" android:layout_marginTop="16dp" android:onClick="logout" android:text="Sign out" android:textAllCaps="false" />
+ <com.google.android.material.bottomnavigation.BottomNavigationView android:id="@+id/patient_bottom_nav" android:layout_width="match_parent" android:layout_height="64dp" android:layout_marginTop="12dp" app:menu="@menu/patient_bottom_nav" /></LinearLayout>
+</ScrollView>

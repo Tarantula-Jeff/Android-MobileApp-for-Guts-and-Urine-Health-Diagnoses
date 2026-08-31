@@ -1,63 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/analyze"
-    tools:context=".SelectActivity">
+    android:background="@drawable/health_page_background"
+    android:padding="24dp">
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="STOOL ANALYZE"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintHorizontal_bias="0.25"
-        android:onClick="StoolAnalyze"
-        />
+    <TextView android:id="@+id/eyebrow" android:layout_width="0dp" android:layout_height="wrap_content" android:text="GUTGUARDIAN" android:textColor="@color/brand_primary" android:textSize="14sp" android:textStyle="bold" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
+    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="How can we help today?" android:textColor="@color/app_on_surface" android:textSize="30sp" android:textStyle="bold" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/eyebrow" />
+    <TextView android:id="@+id/subtitle" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Choose an option to get started." android:textColor="@color/app_on_surface_variant" android:textSize="16sp" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/eyebrow" />
 
+    <com.google.android.material.card.MaterialCardView android:id="@+id/stool_card" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginTop="92dp" app:cardBackgroundColor="@color/app_surface" app:cardCornerRadius="24dp" app:cardElevation="2dp" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/eyebrow">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Stool analysis" android:textColor="@color/app_on_surface" android:textSize="21sp" android:textStyle="bold" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="Capture or select an image for analysis." android:textColor="@color/app_on_surface_variant" android:textSize="14sp" />
+            <com.google.android.material.button.MaterialButton android:id="@+id/button3" style="@style/Widget.Material3.Button.TonalButton" android:layout_width="wrap_content" android:layout_height="48dp" android:layout_marginTop="18dp" android:onClick="StoolAnalyze" android:text="Analyze stool" android:textAllCaps="false" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="URINE ANALYZE"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintHorizontal_bias="0.75"
-        android:onClick="UrineAnalyze"/>
+    <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginTop="16dp" app:cardBackgroundColor="@color/brand_primary_container" app:cardCornerRadius="24dp" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/stool_card">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Urine analysis" android:textColor="@color/brand_on_primary_container" android:textSize="21sp" android:textStyle="bold" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="Check a sample and review the result." android:textColor="@color/brand_on_primary_container" android:textSize="14sp" />
+            <com.google.android.material.button.MaterialButton android:id="@+id/button4" android:layout_width="wrap_content" android:layout_height="48dp" android:layout_marginTop="18dp" android:onClick="UrineAnalyze" android:text="Analyze urine" android:textAllCaps="false" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="136dp"
-        android:layout_height="130dp"
-        android:text="Chatbot"
-        android:background="@drawable/circle_button_background"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75"
-        android:onClick="Chatchat"/>
-
-    <Button
-        android:id="@+id/button6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Menu"
-        app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    tools:layout_editor_absoluteX="45dp"
-    tools:layout_editor_absoluteY="75dp"
-        android:onClick="menu"/>
-
-
+    <com.google.android.material.button.MaterialButton android:id="@+id/button5" style="@style/Widget.Material3.Button.TextButton" android:layout_width="wrap_content" android:layout_height="48dp" android:onClick="Chatchat" android:text="Talk to the health assistant" android:textAllCaps="false" app:layout_constraintBottom_toTopOf="@id/button6" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/button6" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="wrap_content" android:layout_height="48dp" android:layout_marginBottom="8dp" android:onClick="menu" android:text="Care menu" android:textAllCaps="false" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

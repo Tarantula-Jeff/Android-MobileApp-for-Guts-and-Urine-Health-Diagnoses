@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+ <color name="black">#FF000000</color><color name="white">#FFFFFFFF</color>
+ <color name="brand_primary">#0F6FFF</color><color name="brand_on_primary">#FFFFFFFF</color>
+ <color name="brand_primary_container">#DBEAFF</color><color name="brand_on_primary_container">#10233D</color>
+ <color name="brand_secondary">#00A991</color><color name="app_background">#F3F7FB</color>
+ <color name="app_surface">#FFFFFFFF</color><color name="app_surface_variant">#EEF4FB</color>
+ <color name="app_on_surface">#10233D</color><color name="app_on_surface_variant">#58708F</color>
+ <color name="health_success">#0D7E6D</color><color name="health_warning">#A76203</color><color name="health_urgent">#A91F3E</color>
 </resources>

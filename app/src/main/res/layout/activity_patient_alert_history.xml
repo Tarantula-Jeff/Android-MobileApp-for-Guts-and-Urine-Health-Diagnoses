@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/health_page_background" android:orientation="vertical" android:padding="24dp">
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Doctor alert history" android:textColor="@color/app_on_surface" android:textSize="30sp" android:textStyle="bold" />
+    <TextView android:id="@+id/patient_alert_count" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Your updates to the doctor" android:textColor="@color/app_on_surface_variant" android:textSize="15sp" />
+    <ListView android:id="@+id/patient_alert_list" android:layout_width="match_parent" android:layout_height="0dp" android:layout_marginTop="20dp" android:layout_weight="1" android:background="@color/app_surface" android:padding="14dp" />
+</LinearLayout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/health_page_background">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp">
+        <com.google.android.material.button.MaterialButton android:id="@+id/patients_back" style="@style/Widget.Material3.Button.TextButton" android:layout_width="wrap_content" android:layout_height="48dp" android:text="Back" android:textAllCaps="false" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Patients" android:textColor="@color/app_on_surface" android:textSize="30sp" android:textStyle="bold" />
+        <TextView android:id="@+id/patient_page_count" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:textColor="@color/app_on_surface_variant" android:textSize="15sp" />
+        <TextView android:id="@+id/patient_empty" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="36dp" android:text="No patients are connected to your doctor app ID yet." android:textColor="@color/app_on_surface_variant" android:textSize="16sp" />
+        <LinearLayout android:id="@+id/patient_cards" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:orientation="vertical" />
+    </LinearLayout>
+</ScrollView>

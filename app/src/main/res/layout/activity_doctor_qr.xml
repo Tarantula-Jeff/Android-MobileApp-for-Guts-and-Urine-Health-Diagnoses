@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/health_page_background"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="24dp">
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Connect a patient" android:textColor="@color/app_on_surface" android:textSize="30sp" android:textStyle="bold" />
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:gravity="center" android:text="Ask the patient to scan this code from My doctor and settings." android:textColor="@color/app_on_surface_variant" android:textSize="15sp" />
+    <com.google.android.material.card.MaterialCardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="28dp" android:backgroundTint="@color/app_surface">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_horizontal" android:orientation="vertical" android:padding="24dp">
+            <ImageView android:id="@+id/doctor_qr_image" android:layout_width="270dp" android:layout_height="270dp" android:contentDescription="Doctor connection QR code" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="Doctor app ID" android:textColor="@color/app_on_surface_variant" android:textSize="12sp" />
+            <TextView android:id="@+id/qr_doctor_id" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:gravity="center" android:textColor="@color/app_on_surface" android:textIsSelectable="true" android:textSize="13sp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>
